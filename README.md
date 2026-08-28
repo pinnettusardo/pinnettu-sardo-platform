@@ -1,0 +1,1 @@
+# pinnettu-sardo-platform
