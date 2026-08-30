@@ -7,16 +7,37 @@ export async function getServerSideProps() {
 
 export default function Home({ strutture }) {
   return (
-    <div style={{ fontFamily: "sans-serif", padding: "40px", maxWidth: "900px", margin: "0 auto" }}>
-      <h1>Le nostre strutture</h1>
-      <p>Trova e prenota la struttura perfetta per la tua vacanza.</p>
-      <div style={{ display: "grid", gap: "20px", marginTop: "30px" }}>
+    <div>
+      <nav className="navbar">
+        <div className="logo">🏝️ Pinnettu Sardo</div>
+        <button>Accedi</button>
+      </nav>
+
+      <div className="hero">
+        <h1>Trova la tua vacanza perfetta</h1>
+        <p>Case e strutture in Sardegna e non solo</p>
+        <div className="searchbar">
+          <input placeholder="Dove vuoi andare?" />
+          <button>Cerca</button>
+        </div>
+      </div>
+
+      <div className="grid">
         {strutture.map((s) => (
-          <div key={s.id} style={{ border: "1px solid #ddd", borderRadius: "10px", padding: "20px" }}>
-            <h2>{s.nome}</h2>
-            <p>{s.luogo}</p>
-            <p><strong>{s.prezzo}€/notte</strong></p>
-            <p>{s.descrizione}</p>
+          <div key={s.id} className="card">
+            <div className="card-image">
+              {s.foto_url ? (
+                <img src={s.foto_url} alt={s.nome} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                '🏠'
+              )}
+            </div>
+            <div className="card-body">
+              <h2>{s.nome}</h2>
+              <div className="luogo">{s.luogo}</div>
+              <div className="prezzo">{s.prezzo}€/notte</div>
+              <div className="descrizione">{s.descrizione}</div>
+            </div>
           </div>
         ))}
       </div>
