@@ -17,7 +17,10 @@ body {
 }
 
 .logo {
-  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
   font-weight: 800;
   color: #d9532b;
 }
@@ -32,105 +35,6 @@ body {
   cursor: pointer;
 }
 
-.hero {
-  text-align: center;
-  padding: 60px 20px 40px;
-}
-
-.hero h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  color: #666;
-  font-size: 18px;
-  margin-bottom: 30px;
-}
-
-.searchbar {
-  display: inline-flex;
-  align-items: center;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 40px;
-  padding: 8px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-}
-
-.searchbar input {
-  border: none;
-  outline: none;
-  padding: 10px 18px;
-  font-size: 15px;
-  width: 200px;
-}
-
-.searchbar button {
-  background: #d9532b;
-  color: white;
-  border: none;
-  padding: 12px 22px;
-  border-radius: 30px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 28px;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 20px 40px 80px;
-}
-
-.card {
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-}
-
-.card-image {
-  height: 180px;
-  background: linear-gradient(135deg, #f4a261, #2a9d8f);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-}
-
-.card-body {
-  padding: 16px 18px;
-}
-
-.card-body h2 {
-  font-size: 17px;
-  margin: 0 0 4px;
-}
-
-.card-body .luogo {
-  color: #777;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.card-body .prezzo {
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.card-body .descrizione {
-  font-size: 14px;
-  color: #555;
-}
 .navbar-right {
   display: flex;
   align-items: center;
@@ -191,33 +95,52 @@ body {
   font-size: 16px;
 }
 
-.categorie {
+.tabs {
   display: flex;
   justify-content: center;
-  gap: 28px;
-  padding: 10px 20px 30px;
-  flex-wrap: wrap;
+  gap: 40px;
+  padding: 14px 20px 0;
+  border-bottom: 1px solid #eee;
+  background: white;
 }
 
-.categoria {
+.tab {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-size: 13px;
-  color: #666;
+  color: #717171;
+  padding-bottom: 14px;
   cursor: pointer;
-  opacity: 0.7;
 }
 
-.categoria:hover {
-  opacity: 1;
+.tab.active {
   color: #222;
+  border-bottom: 2px solid #222;
+  font-weight: 600;
 }
 
-.categoria .icona {
-  font-size: 22px;
+.tab-icon {
+  font-size: 20px;
 }
+
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #666;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
 .searchbar-full {
   display: inline-flex;
   align-items: center;
@@ -267,38 +190,65 @@ body {
   cursor: pointer;
   margin-left: 6px;
 }
-.tabs {
+
+.categorie {
   display: flex;
   justify-content: center;
-  gap: 40px;
-  padding: 14px 20px 0;
-  border-bottom: 1px solid #eee;
-  background: white;
+  gap: 28px;
+  padding: 10px 20px 30px;
+  flex-wrap: wrap;
 }
 
-.tab {
+.categoria {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   font-size: 13px;
-  color: #717171;
-  padding-bottom: 14px;
+  color: #666;
   cursor: pointer;
+  opacity: 0.7;
 }
 
-.tab.active {
+.categoria:hover {
+  opacity: 1;
   color: #222;
-  border-bottom: 2px solid #222;
-  font-weight: 600;
 }
 
-.tab-icon {
-  font-size: 20px;
+.categoria .icona {
+  font-size: 22px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 40px 80px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
 }
 
 .card-image {
   position: relative;
+  height: 180px;
+  background: linear-gradient(135deg, #f4a261, #2a9d8f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
 }
 
 .heart-btn {
@@ -327,4 +277,29 @@ body {
   font-size: 11px;
   font-weight: 700;
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.card-body {
+  padding: 16px 18px;
+}
+
+.card-body h2 {
+  font-size: 17px;
+  margin: 0 0 4px;
+}
+
+.card-body .luogo {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.card-body .prezzo {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.card-body .descrizione {
+  font-size: 14px;
+  color: #555;
 }
