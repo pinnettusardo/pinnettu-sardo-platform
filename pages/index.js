@@ -20,6 +20,13 @@ export default function Home({ strutture }) {
         </div>
       </nav>
 
+      <div className="tabs">
+        <div className="tab active"><span className="tab-icon">🌐</span>Tutto</div>
+        <div className="tab"><span className="tab-icon">🏠</span>Alloggi</div>
+        <div className="tab"><span className="tab-icon">🎈</span>Esperienze</div>
+        <div className="tab"><span className="tab-icon">🛎️</span>Servizi</div>
+      </div>
+
       <div className="hero">
         <h1>Trova la tua vacanza perfetta</h1>
         <p>Scopri case e alloggi unici in tutto il mondo, per ogni tipo di viaggio</p>
@@ -66,6 +73,8 @@ export default function Home({ strutture }) {
               ) : (
                 '🏠'
               )}
+              <button className="heart-btn">🤍</button>
+              <div className="badge">Nuovo su Havenest</div>
             </div>
             <div className="card-body">
               <h2>{s.nome}</h2>
