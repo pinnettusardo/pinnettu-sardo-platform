@@ -23,9 +23,28 @@ export default function Home({ strutture }) {
       <div className="hero">
         <h1>Trova la tua vacanza perfetta</h1>
         <p>Scopri case e alloggi unici in tutto il mondo, per ogni tipo di viaggio</p>
-        <div className="searchbar">
-          <input placeholder="Dove vuoi andare?" />
-          <button>Cerca</button>
+
+        <div className="searchbar-full">
+          <div className="search-segment">
+            <label>Dove</label>
+            <input placeholder="Cerca una destinazione" />
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-segment">
+            <label>Check-in</label>
+            <input type="date" />
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-segment">
+            <label>Check-out</label>
+            <input type="date" />
+          </div>
+          <div className="search-divider"></div>
+          <div className="search-segment">
+            <label>Ospiti</label>
+            <input type="number" min="1" placeholder="1" />
+          </div>
+          <button className="search-btn">🔍</button>
         </div>
       </div>
 
