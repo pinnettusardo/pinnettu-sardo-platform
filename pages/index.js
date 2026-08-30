@@ -9,17 +9,33 @@ export default function Home({ strutture }) {
   return (
     <div>
       <nav className="navbar">
-        <div className="logo">🏝️ Pinnettu Sardo</div>
-        <button>Accedi</button>
+        <div className="logo">🏡 Havenest</div>
+        <div className="navbar-right">
+          <span className="nav-link">Diventa host</span>
+          <button className="icon-btn">🌐</button>
+          <div className="user-menu">
+            <span>☰</span>
+            <div className="user-icon">👤</div>
+          </div>
+        </div>
       </nav>
 
       <div className="hero">
         <h1>Trova la tua vacanza perfetta</h1>
-        <p>Case e strutture in Sardegna e non solo</p>
+        <p>Scopri case e alloggi unici in tutto il mondo, per ogni tipo di viaggio</p>
         <div className="searchbar">
           <input placeholder="Dove vuoi andare?" />
           <button>Cerca</button>
         </div>
+      </div>
+
+      <div className="categorie">
+        <div className="categoria"><span className="icona">🏖️</span>Mare</div>
+        <div className="categoria"><span className="icona">🏔️</span>Montagna</div>
+        <div className="categoria"><span className="icona">🏙️</span>Città</div>
+        <div className="categoria"><span className="icona">🌾</span>Campagna</div>
+        <div className="categoria"><span className="icona">🏡</span>Case intere</div>
+        <div className="categoria"><span className="icona">🛏️</span>Camere</div>
       </div>
 
       <div className="grid">
