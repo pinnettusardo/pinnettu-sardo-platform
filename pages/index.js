@@ -23,12 +23,12 @@ export default function Home({ strutture }) {
           avenest
         </div>
         <div className="navbar-right">
-          <span className="nav-link">Diventa host</span>
+          <Link href="/registrati" className="nav-link" style={{ textDecoration: 'none' }}>Diventa host</Link>
           <button className="icon-btn">🌐</button>
-          <div className="user-menu">
+          <Link href="/accedi" className="user-menu" style={{ textDecoration: 'none' }}>
             <span>☰</span>
             <div className="user-icon">👤</div>
-          </div>
+          </Link>
         </div>
       </nav>
 
