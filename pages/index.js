@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabaseClient'
+import Link from 'next/link'
 
 export async function getServerSideProps() {
   const { data: strutture } = await supabase.from('strutture').select('*')
@@ -77,23 +78,25 @@ export default function Home({ strutture }) {
 
       <div className="grid">
         {strutture.map((s) => (
-          <div key={s.id} className="card">
-            <div className="card-image">
-              {s.foto_url ? (
-                <img src={s.foto_url} alt={s.nome} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              ) : (
-                '🏠'
-              )}
-              <button className="heart-btn">🤍</button>
-              <div className="badge">Nuovo su Havenest</div>
+          <Link href={`/strutture/${s.id}`} key={s.id} className="card-link">
+            <div className="card">
+              <div className="card-image">
+                {s.foto_url ? (
+                  <img src={s.foto_url} alt={s.nome} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  '🏠'
+                )}
+                <button className="heart-btn" onClick={(e) => e.preventDefault()}>🤍</button>
+                <div className="badge">Nuovo su Havenest</div>
+              </div>
+              <div className="card-body">
+                <h2>{s.nome}</h2>
+                <div className="luogo">{s.luogo}</div>
+                <div className="prezzo">{s.prezzo}€/notte</div>
+                <div className="descrizione">{s.descrizione}</div>
+              </div>
             </div>
-            <div className="card-body">
-              <h2>{s.nome}</h2>
-              <div className="luogo">{s.luogo}</div>
-              <div className="prezzo">{s.prezzo}€/notte</div>
-              <div className="descrizione">{s.descrizione}</div>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
