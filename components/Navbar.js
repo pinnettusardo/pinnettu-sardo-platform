@@ -38,7 +38,7 @@ export default function Navbar() {
         avenest
       </Link>
       <div className="navbar-right">
-        <Link href="/registrati" className="nav-link" style={{ textDecoration: 'none' }}>Diventa host</Link>
+        <Link href={utente ? "/aggiungi-struttura" : "/registrati"} className="nav-link" style={{ textDecoration: 'none' }}>Diventa host</Link>
         <button className="icon-btn">🌐</button>
         {utente ? (
           <div className="user-menu" onClick={handleLogout} style={{ cursor: 'pointer' }} title="Clicca per uscire">
