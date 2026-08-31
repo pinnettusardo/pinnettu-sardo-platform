@@ -11,11 +11,15 @@ export default function Home({ strutture }) {
       <nav className="navbar">
         <div className="logo">
           <svg width="34" height="34" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 92 C50 92 6 62 6 32 C6 14 22 4 38 12 C45 16 50 24 50 24 C50 24 55 16 62 12 C78 4 94 14 94 32 C94 62 50 92 50 92 Z" fill="#d9532b"/>
-            <path d="M50 34 L70 62 L30 62 Z" fill="#ffffff"/>
-            <rect x="44" y="50" width="12" height="14" fill="#d9532b"/>
+            <circle cx="50" cy="50" r="48" fill="#d9532b"/>
+            <rect x="24" y="20" width="13" height="56" rx="4" fill="#ffffff"/>
+            <rect x="63" y="36" width="13" height="40" rx="4" fill="#ffffff"/>
+            <rect x="30" y="46" width="12" height="9" rx="3" fill="#d9532b"/>
+            <rect x="30" y="52" width="40" height="12" rx="5" fill="#ffffff"/>
+            <rect x="27" y="76" width="6" height="8" rx="2" fill="#ffffff"/>
+            <rect x="67" y="76" width="6" height="8" rx="2" fill="#ffffff"/>
           </svg>
-          Havenest
+          avenest
         </div>
         <div className="navbar-right">
           <span className="nav-link">Diventa host</span>
