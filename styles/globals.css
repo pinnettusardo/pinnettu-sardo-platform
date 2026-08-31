@@ -520,3 +520,10 @@ body {
   font-weight: 600;
   text-decoration: none;
 }
+.user-menu span.email {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
