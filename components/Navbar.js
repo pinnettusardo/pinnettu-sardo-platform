@@ -37,15 +37,12 @@ export default function Navbar() {
         </svg>
         avenest
       </Link>
-      <div className="navbar-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' %>}>
-        
-        {/* Mostra "I miei annunci" solo se l'utente ha fatto il login */}
+      <div className="navbar-right">
         {utente && (
-          <Link href="/miei-annunci" className="nav-link" style={{ textDecoration: 'none', fontWeight: '500', color: '#222' }}>
+          <Link href="/miei-annunci" className="nav-link" style={{ textDecoration: 'none', fontWeight: '500', marginRight: '10px' }}>
             I miei annunci
           </Link>
         )}
-
         <Link href={utente ? "/aggiungi-struttura" : "/registrati"} className="nav-link" style={{ textDecoration: 'none' }}>Diventa host</Link>
         <button className="icon-btn">🌐</button>
         {utente ? (
