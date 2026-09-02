@@ -4,48 +4,48 @@ import { useRouter } from 'next/router'
 import Navbar from '../components/Navbar'
 
 export default function MieiAnnunci() {
-  const [unita, setUnita] = useState([])
+  const [strutture, setStrutture] = useState([])
   const [caricamento, setCaricamento] = useState(true)
   const [messaggio, setMessaggio] = useState('')
   const router = useRouter()
 
   useEffect(() => {
-    caricaMieiAnnunci()
+    caricaStrutture()
   }, [])
 
-  async function caricaMieiAnnunci() {
+  async function caricaStrutture() {
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) {
       router.push('/accedi')
       return
     }
 
-    // Carichiamo tutte le unità e le relative strutture senza filtri rigidi di ID
+    // Carichiamo tutte le strutture salvate nel database
     const { data, error } = await supabase
-      .from('unita')
-      .select('*, strutture(nome, proprietario, user_id)')
+      .from('strutture')
+      .select('*')
 
     if (error) {
       console.error('Errore nel caricamento:', error.message)
     } else {
-      setUnita(data || [])
+      setStrutture(data || [])
     }
     setCaricamento(false)
   }
 
-  async function eliminaUnita(id) {
-    if (!confirm("Sei sicuro di voler eliminare questo annuncio?")) return
+  async function eliminaStruttura(id) {
+    if (!confirm("Sei sicuro di voler eliminare questa proprietà?")) return
 
     const { error } = await supabase
-      .from('unita')
+      .from('strutture')
       .delete()
       .eq('id', id)
 
     if (error) {
       setMessaggio('Errore durante la cancellazione: ' + error.message)
     } else {
-      setMessaggio('Annuncio eliminato con successo!')
-      caricaMieiAnnunci()
+      setMessaggio('Proprietà eliminata con successo!')
+      caricaStrutture()
     }
   }
 
@@ -55,27 +55,27 @@ export default function MieiAnnunci() {
     <div>
       <Navbar />
       <div style={{ maxWidth: '800px', margin: '40px auto', padding: '20px' }}>
-        <h1>I miei annunci</h1>
+        <h1>I miei annunci (Proprietà)</h1>
         <p style={{ color: '#666', marginBottom: '20px' }}>
-          Gestisci e pulisci qui le unità e le strutture pubblicate su Havenest.
+          Gestisci e pulisci qui le strutture pubblicate su Havenest.
         </p>
 
         {messaggio && <div style={{ padding: '10px', background: '#eef', marginBottom: '20px', borderRadius: '8px' }}>{messaggio}</div>}
 
-        {unita.length === 0 ? (
-          <p>Non ci sono annunci nel database.</p>
+        {strutture.length === 0 ? (
+          <p>Non ci sono proprietà nel database.</p>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {unita.map((item) => (
+            {strutture.map((item) => (
               <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', border: '1px solid #ddd', borderRadius: '12px', background: '#fff' }}>
                 <div>
                   <h3 style={{ margin: '0 0 5px 0' }}>{item.nome}</h3>
                   <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>
-                    Proprietà: <strong>{item.strutture?.nome || 'Nessuna struttura collegata'}</strong> — Prezzo: <strong>€{item.prezzo}</strong> / notte
+                    Luogo: <strong>{item.luogo}</strong> — Proprietario: <strong>{item.proprietario}</strong>
                   </p>
                 </div>
                 <button 
-                  onClick={() => eliminaUnita(item.id)}
+                  onClick={() => eliminaStruttura(item.id)}
                   style={{ background: '#FF385C', color: 'white', border: 'none', padding: '8px 14px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
                 >
                   Elimina
