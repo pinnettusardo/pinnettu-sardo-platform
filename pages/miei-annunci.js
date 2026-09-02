@@ -20,12 +20,10 @@ export default function MieiAnnunci() {
       return
     }
 
-    // Recuperiamo le unità create dall'utente loggato (tramite la struttura o l'utente)
-    // Selezioniamo le unità associate alle strutture dell'utente
+    // Carichiamo tutte le unità e le relative strutture senza filtri rigidi di ID
     const { data, error } = await supabase
       .from('unita')
-      .select('*, strutture!inner(nome, proprietario, user_id)')
-      .eq('strutture.user_id', session.user.id)
+      .select('*, strutture(nome, proprietario, user_id)')
 
     if (error) {
       console.error('Errore nel caricamento:', error.message)
@@ -47,7 +45,6 @@ export default function MieiAnnunci() {
       setMessaggio('Errore durante la cancellazione: ' + error.message)
     } else {
       setMessaggio('Annuncio eliminato con successo!')
-      // Ricarica la lista aggiornata
       caricaMieiAnnunci()
     }
   }
@@ -60,13 +57,13 @@ export default function MieiAnnunci() {
       <div style={{ maxWidth: '800px', margin: '40px auto', padding: '20px' }}>
         <h1>I miei annunci</h1>
         <p style={{ color: '#666', marginBottom: '20px' }}>
-          Gestisci qui le tue unità e strutture pubblicate su Havenest.
+          Gestisci e pulisci qui le unità e le strutture pubblicate su Havenest.
         </p>
 
         {messaggio && <div style={{ padding: '10px', background: '#eef', marginBottom: '20px', borderRadius: '8px' }}>{messaggio}</div>}
 
         {unita.length === 0 ? (
-          <p>Non hai ancora pubblicato nessun annuncio.</p>
+          <p>Non ci sono annunci nel database.</p>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             {unita.map((item) => (
@@ -74,7 +71,7 @@ export default function MieiAnnunci() {
                 <div>
                   <h3 style={{ margin: '0 0 5px 0' }}>{item.nome}</h3>
                   <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>
-                    Proprietà: <strong>{item.strutture?.nome}</strong> — Prezzo: <strong>€{item.prezzo}</strong> / notte
+                    Proprietà: <strong>{item.strutture?.nome || 'Nessuna struttura collegata'}</strong> — Prezzo: <strong>€{item.prezzo}</strong> / notte
                   </p>
                 </div>
                 <button 
