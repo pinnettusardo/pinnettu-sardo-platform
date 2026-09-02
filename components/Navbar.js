@@ -37,7 +37,7 @@ export default function Navbar() {
         </svg>
         avenest
       </Link>
-      <div className="navbar-right">
+      <div className="navbar-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
         {utente && (
           <Link href="/miei-annunci" className="nav-link" style={{ textDecoration: 'none', fontWeight: '500', marginRight: '10px' }}>
             I miei annunci
