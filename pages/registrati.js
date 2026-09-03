@@ -5,16 +5,43 @@ import Link from 'next/link'
 export default function Registrati() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [nome, setNome] = useState('')
+  const [cognome, setCognome] = useState('')
   const [messaggio, setMessaggio] = useState('')
 
   async function handleSubmit(e) {
     e.preventDefault()
     setMessaggio('')
-    const { error } = await supabase.auth.signUp({ email, password })
-    if (error) {
+
+    try {
+      // 1. Registrazione dell'utente in Supabase Auth
+      const { data, error: authError } = await supabase.auth.signUp({ 
+        email, 
+        password 
+      })
+
+      if (authError) throw authError
+
+      const user = data.user
+      if (user) {
+        // 2. Salvataggio dei dati aggiuntivi nella tabella 'profiles'
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert([
+            { 
+              id: user.id, // Collega l'ID univoco dell'utente
+              nome: nome,
+              cognome: cognome,
+              role: 'guest'
+            }
+          ])
+
+        if (profileError) throw profileError
+
+        setMessaggio('Registrazione avvenuta! Controlla la tua email per confermare.')
+      }
+    } catch (error) {
       setMessaggio('Errore: ' + error.message)
-    } else {
-      setMessaggio('Registrazione avvenuta! Controlla la tua email per confermare.')
     }
   }
 
@@ -39,6 +66,14 @@ export default function Registrati() {
         <div className="auth-box">
           <h1>Crea il tuo account</h1>
           <form onSubmit={handleSubmit}>
+            <div className="auth-field">
+              <label>Nome</label>
+              <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} required />
+            </div>
+            <div className="auth-field">
+              <label>Cognome</label>
+              <input type="text" value={cognome} onChange={(e) => setCognome(e.target.value)} required />
+            </div>
             <div className="auth-field">
               <label>Email</label>
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
