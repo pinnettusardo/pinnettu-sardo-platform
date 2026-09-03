@@ -1,62 +1,28 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabaseClient'
+import { useState } from 'react'
 import Link from 'next/link'
 
 export default function Home() {
-  const [blocchi, setBlocchi] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetchBlocks()
-  }, [])
-
-  async function fetchBlocks() {
-    try {
-      const { data, error } = await supabase
-        .from('site_blocks')
-        .select('*')
-        .order('order_index', { ascending: true })
-
-      if (error) throw error
-      setBlocchi(data || [])
-    } catch (error) {
-      console.error('Errore nel caricamento dei blocchi:', error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
     <div>
       <nav className="navbar">
         <Link href="/" className="logo" style={{ textDecoration: 'none' }}>
-          Pinnettu Sardo
+          <svg width="34" height="34" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#d9532b"/>
+            <rect x="24" y="20" width="13" height="56" rx="4" fill="#ffffff"/>
+            <rect x="63" y="36" width="13" height="40" rx="4" fill="#ffffff"/>
+            <rect x="30" y="46" width="12" height="9" rx="3" fill="#d9532b"/>
+            <rect x="30" y="52" width="40" height="12" rx="5" fill="#ffffff"/>
+            <rect x="27" y="76" width="6" height="8" rx="2" fill="#ffffff"/>
+            <rect x="67" y="76" width="6" height="8" rx="2" fill="#ffffff"/>
+          </svg>
+          avenest
         </Link>
-        <div className="nav-links">
-          <Link href="/accedi">Accedi</Link>
-          <Link href="/registrati">Registrati</Link>
-        </div>
       </nav>
 
-      <div className="container" style={{ padding: '40px 20px' }}>
+      <div className="container">
         <h1>Benvenuti a Pinnettu Sardo</h1>
-        
-        {loading ? (
-          <p>Caricamento contenuti in corso...</p>
-        ) : blocchi.length === 0 ? (
-          <p>Nessun blocco trovato nel database. Aggiungi il primo blocco su Supabase!</p>
-        ) : (
-          <div className="blocks-grid">
-            {blocchi.map((block) => (
-              <div key={block.id} className="block-card" style={{ marginBottom: '30px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-                <h2>{block.title}</h2>
-                <p>{block.content}</p>
-                {block.image_url && <img src={block.image_url} alt={block.title} style={{ maxWidth: '100%', borderRadius: '6px' }} />}
-              </div>
-            ))}
-          </div>
-        )}
+        <p>Il sito è in fase di configurazione.</p>
       </div>
     </div>
-  )
+  );
 }
