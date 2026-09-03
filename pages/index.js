@@ -40,6 +40,7 @@ export default function Home({ strutture }) {
         <div className="navbar-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link href="/registrati" className="nav-link" style={{ textDecoration: 'none' }}>Diventa host</Link>
           <Link href="/miei-annunci" className="nav-link" style={{ textDecoration: 'none' }}>I miei annunci</Link>
+          <Link href="/aggiungi-struttura" className="nav-link" style={{ textDecoration: 'none' }}>+ Aggiungi struttura</Link>
           <button className="icon-btn" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px' }}>🌐</button>
           
           {user ? (
