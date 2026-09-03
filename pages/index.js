@@ -1,84 +1,62 @@
+import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import Link from 'next/link'
-import Navbar from '../components/Navbar'
 
-export async function getServerSideProps() {
-  const { data: strutture } = await supabase.from('strutture').select('*')
-  return { props: { strutture: strutture || [] } }
-}
+export default function Home() {
+  const [blocchi, setBlocchi] = useState([])
+  const [loading, setLoading] = useState(true)
 
-export default function Home({ strutture }) {
+  useEffect(() => {
+    fetchBlocks()
+  }, [])
+
+  async function fetchBlocks() {
+    try {
+      const { data, error } = await supabase
+        .from('site_blocks')
+        .select('*')
+        .order('order_index', { ascending: true })
+
+      if (error) throw error
+      setBlocchi(data || [])
+    } catch (error) {
+      console.error('Errore nel caricamento dei blocchi:', error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div>
-      <Navbar />
-
-      <div className="tabs">
-        <div className="tab active"><span className="tab-icon">🌐</span>Tutto</div>
-        <div className="tab"><span className="tab-icon">🏠</span>Alloggi</div>
-        <div className="tab"><span className="tab-icon">🎈</span>Esperienze</div>
-        <div className="tab"><span className="tab-icon">🛎️</span>Servizi</div>
-      </div>
-
-      <div className="hero">
-        <h1>Trova la tua vacanza perfetta</h1>
-        <p>Scopri case e alloggi unici in tutto il mondo, per ogni tipo di viaggio</p>
-
-        <div className="searchbar-full">
-          <div className="search-segment">
-            <label>Dove</label>
-            <input placeholder="Cerca una destinazione" />
-          </div>
-          <div className="search-divider"></div>
-          <div className="search-segment">
-            <label>Check-in</label>
-            <input type="date" />
-          </div>
-          <div className="search-divider"></div>
-          <div className="search-segment">
-            <label>Check-out</label>
-            <input type="date" />
-          </div>
-          <div className="search-divider"></div>
-          <div className="search-segment">
-            <label>Ospiti</label>
-            <input type="number" min="1" placeholder="1" />
-          </div>
-          <button className="search-btn">🔍</button>
+      <nav className="navbar">
+        <Link href="/" className="logo" style={{ textDecoration: 'none' }}>
+          Pinnettu Sardo
+        </Link>
+        <div className="nav-links">
+          <Link href="/accedi">Accedi</Link>
+          <Link href="/registrati">Registrati</Link>
         </div>
-      </div>
+      </nav>
 
-      <div className="categorie">
-        <div className="categoria"><span className="icona">🏖️</span>Mare</div>
-        <div className="categoria"><span className="icona">🏔️</span>Montagna</div>
-        <div className="categoria"><span className="icona">🏙️</span>Città</div>
-        <div className="categoria"><span className="icona">🌾</span>Campagna</div>
-        <div className="categoria"><span className="icona">🏡</span>Case intere</div>
-        <div className="categoria"><span className="icona">🛏️</span>Camere</div>
-      </div>
-
-      <div className="grid">
-        {strutture.map((s) => (
-          <Link href={`/strutture/${s.id}`} key={s.id} className="card-link">
-            <div className="card">
-              <div className="card-image">
-                {s.foto_url ? (
-                  <img src={s.foto_url} alt={s.nome} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                ) : (
-                  '🏠'
-                )}
-                <button className="heart-btn" onClick={(e) => e.preventDefault()}>🤍</button>
-                <div className="badge">Nuovo su Havenest</div>
+      <div className="container" style={{ padding: '40px 20px' }}>
+        <h1>Benvenuti a Pinnettu Sardo</h1>
+        
+        {loading ? (
+          <p>Caricamento contenuti in corso...</p>
+        ) : blocchi.length === 0 ? (
+          <p>Nessun blocco trovato nel database. Aggiungi il primo blocco su Supabase!</p>
+        ) : (
+          <div className="blocks-grid">
+            {blocchi.map((block) => (
+              <div key={block.id} className="block-card" style={{ marginBottom: '30px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
+                <h2>{block.title}</h2>
+                <p>{block.content}</p>
+                {block.image_url && <img src={block.image_url} alt={block.title} style={{ maxWidth: '100%', borderRadius: '6px' }} />}
               </div>
-              <div className="card-body">
-                <h2>{s.nome}</h2>
-                <div className="luogo">{s.luogo}</div>
-                <div className="prezzo">{s.prezzo}€/notte</div>
-                <div className="descrizione">{s.descrizione}</div>
-              </div>
-            </div>
-          </Link>
-        ))}
+            ))}
+          </div>
+        )}
       </div>
     </div>
-  );
+  )
 }
