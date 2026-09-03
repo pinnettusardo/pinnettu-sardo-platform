@@ -11,12 +11,10 @@ export default function Home({ strutture }) {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    // Controlla la sessione attiva all'avvio
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
     })
 
-    // Sincronizza i cambiamenti di login/logout in tempo reale
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
     })
@@ -41,6 +39,7 @@ export default function Home({ strutture }) {
         </Link>
         <div className="navbar-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link href="/registrati" className="nav-link" style={{ textDecoration: 'none' }}>Diventa host</Link>
+          <Link href="/miei-annunci" className="nav-link" style={{ textDecoration: 'none' }}>I miei annunci</Link>
           <button className="icon-btn" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px' }}>🌐</button>
           
           {user ? (
