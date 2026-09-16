@@ -1,62 +1,97 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabaseClient'
-import Link from 'next/link'
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import { useRouter } from 'next/router';
 
 export default function Navbar() {
-  const [utente, setUtente] = useState(null)
+  const [user, setUser] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setUtente(data.session?.user || null)
-    })
+    // Recupera l'utente loggato al caricamento
+    const fetchUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+    };
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUtente(session?.user || null)
-    })
+    fetchUser();
+
+    // Ascolta i cambiamenti di autenticazione (login/logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
 
     return () => {
-      listener.subscription.unsubscribe()
-    }
-  }, [])
+      subscription.unsubscribe();
+    };
+  }, []);
 
-  async function handleLogout() {
-    await supabase.auth.signOut()
-  }
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push('/');
+  };
 
   return (
-    <nav className="navbar">
-      <Link href="/" className="logo" style={{ textDecoration: 'none' }}>
-        <svg width="34" height="34" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="48" fill="#d9532b"/>
-          <rect x="24" y="20" width="13" height="56" rx="4" fill="#ffffff"/>
-          <rect x="63" y="36" width="13" height="40" rx="4" fill="#ffffff"/>
-          <rect x="30" y="46" width="12" height="9" rx="3" fill="#d9532b"/>
-          <rect x="30" y="52" width="40" height="12" rx="5" fill="#ffffff"/>
-          <rect x="27" y="76" width="6" height="8" rx="2" fill="#ffffff"/>
-          <rect x="67" y="76" width="6" height="8" rx="2" fill="#ffffff"/>
-        </svg>
-        avenest
-      </Link>
-      <div className="navbar-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-        {utente && (
-          <Link href="/miei-annunci" className="nav-link" style={{ textDecoration: 'none', fontWeight: '500', marginRight: '10px' }}>
-            I miei annunci
-          </Link>
-        )}
-        <Link href={utente ? "/aggiungi-struttura" : "/registrati"} className="nav-link" style={{ textDecoration: 'none' }}>Diventa host</Link>
-        <button className="icon-btn">🌐</button>
-        {utente ? (
-          <div className="user-menu" onClick={handleLogout} style={{ cursor: 'pointer' }} title="Clicca per uscire">
-            <span className="email">{utente.email}</span>
-            <div className="user-icon">👤</div>
+    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          {/* Logo / Nome del sito */}
+          <div className="flex items-center">
+            <Link href="/" className="text-xl font-bold text-rose-600 hover:opacity-90 transition">
+              Pinnettu Sardo
+            </Link>
           </div>
-        ) : (
-          <Link href="/accedi" className="user-menu" style={{ textDecoration: 'none' }}>
-            <span>☰</span>
-            <div className="user-icon">👤</div>
-          </Link>
-        )}
+
+          {/* Menu di destra */}
+          <div className="flex items-center space-x-4">
+            {user ? (
+              // Utente Loggato
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-600 hidden sm:inline">
+                  {user.email}
+                </span>
+                <Link 
+                  href="/miei-annunci" 
+                  className="text-sm font-medium text-gray-700 hover:text-rose-600 transition"
+                >
+                  I miei annunci
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-sm font-medium text-rose-600 hover:text-rose-700 border border-rose-200 px-3 py-1.5 rounded-xl transition"
+                >
+                  Esci
+                </button>
+              </div>
+            ) : (
+              // Utente NON Loggato (Mostra Accedi e Registrazioni separate)
+              <div className="flex items-center space-x-3">
+                <Link 
+                  href="/accedi" 
+                  className="text-sm font-medium text-gray-700 hover:text-rose-600 px-3 py-2 transition"
+                >
+                  Accedi
+                </Link>
+                
+                <Link 
+                  href="/registrati-guest" 
+                  className="text-sm font-medium text-gray-700 hover:text-rose-600 border border-gray-200 px-3 py-2 rounded-xl transition"
+                >
+                  Registrati (Ospite)
+                </Link>
+
+                <Link 
+                  href="/registrati-host" 
+                  className="text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 px-4 py-2 rounded-xl transition shadow-sm"
+                >
+                  Diventa Host
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </nav>
-  )
+  );
 }
