@@ -35,8 +35,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           
-          {/* Logo Brand */}
-          <Link href="/" className="flex items-center space-x-2.5">
+          {/* Logo Havenest */}
+          <Link href="/" className="flex items-center space-x-2">
             <div className="w-9 h-9 bg-rose-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-sm">
               H
             </div>
@@ -47,33 +47,45 @@ export default function Navbar() {
 
           {/* Menu di Navigazione */}
           <div className="flex items-center space-x-6">
-            <Link href="/registrati-host" className="text-sm font-medium text-gray-700 hover:text-rose-600 transition">
+            <Link 
+              href="/registrati-host" 
+              className="text-sm font-medium text-gray-700 hover:text-rose-600 transition"
+            >
               Diventa host
             </Link>
 
-            <Link href="/miei-annunci" className="text-sm font-medium text-gray-700 hover:text-rose-600 transition">
+            <Link 
+              href="/miei-annunci" 
+              className="text-sm font-medium text-gray-700 hover:text-rose-600 transition"
+            >
               I miei annunci
             </Link>
 
-            <Link href="/aggiungi-struttura" className="text-sm font-medium text-gray-700 hover:text-rose-600 transition">
+            <Link 
+              href="/aggiungi-struttura" 
+              className="text-sm font-medium text-gray-700 hover:text-rose-600 transition"
+            >
               + Aggiungi struttura
             </Link>
 
-            {/* Gestione Utente / Logout */}
+            {/* Gestione Autenticazione / Logout */}
             {user ? (
-              <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
-                <span className="text-sm font-medium text-gray-600 hidden md:inline">
+              <div className="flex items-center space-x-3 ml-2">
+                <span className="text-xs text-gray-500 hidden md:inline">
                   {user.email}
                 </span>
                 <button
                   onClick={handleLogout}
-                  className="text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 px-3.5 py-1.5 rounded-lg transition shadow-sm cursor-pointer"
+                  className="text-sm font-medium text-rose-600 hover:text-rose-700 border border-rose-200 hover:border-rose-300 bg-rose-50 px-3 py-1.5 rounded-xl transition shadow-sm cursor-pointer"
                 >
                   Esci
                 </button>
               </div>
             ) : (
-              <Link href="/accedi" className="text-sm font-medium text-gray-700 hover:text-rose-600 border border-gray-200 px-4 py-2 rounded-xl transition shadow-sm">
+              <Link 
+                href="/accedi" 
+                className="text-sm font-medium text-gray-700 hover:text-rose-600 border border-gray-200 px-3.5 py-2 rounded-xl transition shadow-sm"
+              >
                 Accedi
               </Link>
             )}
