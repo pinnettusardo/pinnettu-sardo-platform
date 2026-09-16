@@ -1,94 +1,110 @@
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { supabase } from '../lib/supabaseClient';
+Skip to content
 
-export default function Navbar() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+Find
+F
 
-  useEffect(() => {
-    // Recupera la sessione attuale al primo caricamento
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+Overview
+Deployments
+Logs
+Analytics
+Speed Insights
+Observability
+Firewall
+CDN
+Environment Variables
+Domains
+Connect
+Integrations
+Storage
+Flags
+Agent
+AI Gateway
+Sandboxes
+Workflows
+Images
+Usage
+Support
+Settings
+Free Domain with Pro
+Upgrade to Pro and get a free domain for your first year.
 
-    // Ascolta i cambi di stato (login/logout) in tempo reale
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
+Avatar for pinnettusardo
+pinnettusardo
 
-    return () => {
-      listener?.subscription?.unsubscribe();
-    };
-  }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
-    router.push('/');
-  };
+Deployments
+F8fuaLMPd
 
-  return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
-      <div className="flex justify-between items-center h-16 max-w-7xl mx-auto px-4">
-        {/* LOGO */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-rose-600 text-white font-bold text-lg">
-            H
-          </span>
-          <span className="text-lg font-semibold text-gray-900 whitespace-nowrap">
-            Havenest
-          </span>
-        </Link>
+Deployment
+Logs
+Resources
+Source
+Open Graph
+Deployment Details
+Build Failed
+Command "npm run build" exited with 1
+Created
+github/pinnettusardo
+pinnettusardo
+2m ago
+Status
+Error
+Latest
+Duration
+11s
+2m ago
+Environment
+Production
+Domains
+pinnettu-sardo-platform-git-main-pinnettu.vercel.app
+pinnettu-sardo-platform-gu14u8aua-pinnettu.vercel.app
+Source
+main
+5c4cf36
+Enhance user session management in Navbar
 
-        {/* LINK DI NAVIGAZIONE */}
-        <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
-          <Link
-            href="/registrati-host"
-            className="text-sm font-medium text-gray-700 hover:text-rose-600 whitespace-nowrap"
-          >
-            Diventa host
-          </Link>
+Deployment Settings
+2 Recommendations
+Build Logs
+11s
+1 line selected
 
-          {user && (
-            <Link
-              href="/le-mie-strutture"
-              className="text-sm font-medium text-gray-700 hover:text-rose-600 whitespace-nowrap"
-            >
-              I miei annunci
-            </Link>
-          )}
+4
+Find in logs
+Ctrl
+F
+   Creating an optimized production build ...
+Failed to compile.
+./components/Navbar.js
+Error: 
+  x Unterminated string constant
+    ,-[/vercel/path0/components/Navbar.js:91:1]
+ 91 |           ) : (
+ 92 |             <Link
+ 93 |               href="/accedi"
+ 94 |               className="text-sm font-medium px-4 py-2 rounded-full bg-rose-600
+    :                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    `----
+  x Unexpected eof
+    ,-[/vercel/path0/components/Navbar.js:92:1]
+Deployment Summary
+Deployment Checks
+Assigning Custom Domains
+Runtime Logs
 
-          <Link
-            href="/aggiungi-struttura"
-            className="text-sm font-medium text-gray-700 hover:text-rose-600 whitespace-nowrap"
-          >
-            + Aggiungi struttura
-          </Link>
-        </div>
+View and debug runtime logs & errors
 
-        {/* AREA UTENTE (login/logout) */}
-        <div className="flex items-center gap-3 shrink-0">
-          {loading ? (
-            <div className="w-24 h-8" />
-          ) : user ? (
-            <div className="flex items-center gap-3">
-              <span className="hidden sm:inline text-sm text-gray-600 truncate max-w-[160px]">
-                {user.email}
-              </span>
-              <button
-                onClick={handleLogout}
-                className="text-sm font-medium px-4 py-2 rounded-full border border-gray-300 text-gray-800 hover:bg-gray-50 whitespace-nowrap"
-              >
-                Esci
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/accedi"
-              className="text-sm font-medium px-4 py-2 rounded-full bg-rose-600
+Observability
+
+Monitor app health & performance
+
+Speed Insights
+
+Not Enabled
+Performance metrics from real users
+
+Web Analytics
+
+Not Enabled
+Analyze visitors & traffic in real-time
+
