@@ -37,18 +37,23 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo / Nome del sito */}
-          <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold text-rose-600 hover:opacity-90 transition">
-              Havenest
+          <div className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="w-9 h-9 bg-rose-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                H
+              </div>
+              <span className="text-xl font-bold text-gray-900 tracking-tight">
+                Havenest
+              </span>
             </Link>
           </div>
 
           {/* Menu di destra */}
           <div className="flex items-center space-x-4">
             {user ? (
-              // Utente Loggato
+              // Utente Loggato (Mostra email, annunci, gestisci struttura e tasto Esci)
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-600 hidden sm:inline">
+                <span className="text-sm text-gray-600 hidden md:inline">
                   {user.email}
                 </span>
                 <Link 
@@ -57,9 +62,15 @@ export default function Navbar() {
                 >
                   I miei annunci
                 </Link>
+                <Link 
+                  href="/aggiungi-struttura" 
+                  className="text-sm font-medium text-gray-700 hover:text-rose-600 transition hidden sm:inline"
+                >
+                  + Aggiungi struttura
+                </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-sm font-medium text-rose-600 hover:text-rose-700 border border-rose-200 px-3 py-1.5 rounded-xl transition"
+                  className="text-sm font-medium text-rose-600 hover:text-rose-700 border border-rose-200 hover:border-rose-300 px-3.5 py-1.5 rounded-xl transition shadow-sm"
                 >
                   Esci
                 </button>
@@ -76,7 +87,7 @@ export default function Navbar() {
                 
                 <Link 
                   href="/registrati-guest" 
-                  className="text-sm font-medium text-gray-700 hover:text-rose-600 border border-gray-200 px-3 py-2 rounded-xl transition"
+                  className="text-sm font-medium text-gray-700 hover:text-rose-600 border border-gray-200 px-3 py-2 rounded-xl transition hidden sm:inline"
                 >
                   Registrati (Ospite)
                 </Link>
