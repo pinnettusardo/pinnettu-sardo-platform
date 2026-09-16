@@ -39,7 +39,7 @@ export default function Navbar() {
           {/* Logo / Nome del sito */}
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold text-rose-600 hover:opacity-90 transition">
-              Pinnettu Sardo
+              Havenest
             </Link>
           </div>
 
